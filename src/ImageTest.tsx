@@ -13,8 +13,22 @@ export function ImageTest() {
       : 'done'
     : 'notloaded'
 
+  const isNobody =
+    result &&
+    result.tag.records[0]._tags.find((tag: any) => tag.name === 'nobody')
+
+  const isMan =
+    result && result.tag.records[0]._tags.find((tag: any) => tag.name === 'man')
+
+  const isDog =
+    result && result.tag.records[0]._tags.find((tag: any) => tag.name === 'dog')
+
   const isRichelle =
-    result && result.classify.records[0].best_label.name === 'Richelle Chen'
+    result &&
+    result.classify.records[0].best_label.name === 'Richelle Chen' &&
+    !isNobody &&
+    !isMan &&
+    !isDog
 
   const onDrop = React.useCallback(
     files => {
@@ -90,26 +104,25 @@ function useClassify() {
       },
     )).json()
 
-    // TODO Get approved
-    // const tagBody: any = {
-    // lang: 'en',
-    // tagging_mode: 'complex',
-    // records,
-    // }
+    const tagBody: any = {
+      lang: 'en',
+      tagging_mode: 'complex',
+      records,
+    }
 
-    // const tagResult = await (await fetch(
-    // 'https://api.ximilar.com/tagging/generic/v2/tags',
-    // {
-    // method: 'POST',
-    // headers: new Headers({
-    // 'Content-Type': 'application/json',
-    // Authorization: 'Token 9d7f909f1f21c519146b54af58e5bf5d0f3b214b',
-    // }),
-    // body: JSON.stringify(classifyBody),
-    // },
-    // )).json()
+    const tagResult = await (await fetch(
+      'https://api.ximilar.com/tagging/generic/v2/tags',
+      {
+        method: 'POST',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+          Authorization: 'Token 9d7f909f1f21c519146b54af58e5bf5d0f3b214b',
+        }),
+        body: JSON.stringify(classifyBody),
+      },
+    )).json()
 
-    setResult({ classify: classifyResult, tag: null /* tagResult */ })
+    setResult({ classify: classifyResult, tag: tagResult })
   }, [])
 
   return { handleClassify, result, previewImageUrl }
