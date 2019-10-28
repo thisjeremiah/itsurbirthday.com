@@ -9,7 +9,12 @@
 }
 
 html {
-  background: blue url('./background.gif') repeat;
+  background: blue url('http://www.aivahthemes.com/linofeast/files/Portato.jpg')
+    repeat;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: rgb(228, 179, 111);
 }
 
 h1,

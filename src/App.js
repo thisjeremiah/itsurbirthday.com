@@ -1,13 +1,9 @@
 import React from 'react'
 import './App.css'
-import { ImageTest } from './ImageTest'
+import { Potato } from './Potato'
 
 function App() {
-  return (
-    <div className="App">
-      <ImageTest />
-    </div>
-  )
+  return <div className="App"></div>
 }
 
 export default App
